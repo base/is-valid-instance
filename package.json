@@ -1,7 +1,7 @@
 {
   "name": "is-valid-instance",
   "description": "Returns true if a value is a valid instance of Base.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/jonschlinkert/is-valid-instance",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/is-valid-instance",
@@ -25,10 +25,10 @@
     "pascalcase": "^0.1.1"
   },
   "devDependencies": {
-    "base": "^0.8.1",
+    "base": "^0.11.1",
     "gulp-format-md": "^0.1.9",
-    "mocha": "^2.4.5",
-    "templates": "^0.17.2",
+    "mocha": "^2.5.3",
+    "templates": "^0.22.5",
     "vinyl": "^1.1.1"
   },
   "keywords": [
@@ -49,7 +49,10 @@
       ]
     },
     "reflinks": [
-      "verb"
+      "verb",
+      "base",
+      "templates",
+      "verb-readme-generator"
     ]
   }
 }

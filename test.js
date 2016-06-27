@@ -92,6 +92,26 @@ describe('is-valid-instance', function() {
       assert(isValidInstance(app));
     });
 
+    it('should return true when any is defined', function() {
+      var app = new Templates();
+      var Collection = Templates.Collection;
+      var collection = new Collection();
+      var View = Templates.View;
+      var view = new View();
+      assert(isValidInstance(app, ['*']));
+      assert(isValidInstance(app, '*'));
+      assert(isValidInstance(app, 'any'));
+      assert(isValidInstance(app, ['any']));
+      assert(isValidInstance(collection, ['*']));
+      assert(isValidInstance(collection, '*'));
+      assert(isValidInstance(collection, 'any'));
+      assert(isValidInstance(collection, ['any']));
+      assert(isValidInstance(view, ['*']));
+      assert(isValidInstance(view, '*'));
+      assert(isValidInstance(view, 'any'));
+      assert(isValidInstance(view, ['any']));
+    });
+
     it('should return false for an instance of Collection is passed', function() {
       var Collection = Templates.Collection;
       var collection = new Collection();
@@ -101,7 +121,7 @@ describe('is-valid-instance', function() {
     it('should return true for an instance of Collection when defined on types', function() {
       var Collection = Templates.Collection;
       var collection = new Collection();
-      assert(isValidInstance(collection, ['collection']));
+      assert(isValidInstance(collection, ['Collection']));
     });
 
     it('should return false for an instance of View is passed', function() {
@@ -144,7 +164,7 @@ describe('is-valid-instance', function() {
       view.use(plugin());
 
       assert.deepEqual(hits, ['app']);
-      assert.deepEqual(misses, ['collection', 'view']);
+      assert.deepEqual(misses, ['Collection', 'view']);
     });
 
     it('should work for an instance of Collection', function() {
@@ -152,7 +172,7 @@ describe('is-valid-instance', function() {
       var misses = [];
       function plugin() {
         return function fn(app) {
-          if (!isValidInstance(this, ['collection'])) {
+          if (!isValidInstance(this, ['Collection'])) {
             misses.push(this._name);
             return fn;
           }
@@ -165,7 +185,7 @@ describe('is-valid-instance', function() {
       collection.use(plugin());
       view.use(plugin());
 
-      assert.deepEqual(hits, ['collection']);
+      assert.deepEqual(hits, ['Collection']);
       assert.deepEqual(misses, ['app', 'view']);
     });
 
@@ -188,7 +208,7 @@ describe('is-valid-instance', function() {
       view.use(plugin());
 
       assert.deepEqual(hits, ['view']);
-      assert.deepEqual(misses, ['app', 'collection']);
+      assert.deepEqual(misses, ['app', 'Collection']);
     });
 
     it('should work for App and View', function() {
@@ -210,7 +230,7 @@ describe('is-valid-instance', function() {
       view.use(plugin());
 
       assert.deepEqual(hits, ['app', 'view']);
-      assert.deepEqual(misses, ['collection']);
+      assert.deepEqual(misses, ['Collection']);
     });
 
     it('should work for App and Collection', function() {
@@ -218,7 +238,7 @@ describe('is-valid-instance', function() {
       var misses = [];
       function plugin() {
         return function fn(app) {
-          if (!isValidInstance(this, ['collection', 'app'])) {
+          if (!isValidInstance(this, ['Collection', 'app'])) {
             misses.push(this._name);
             return fn;
           }
@@ -231,7 +251,7 @@ describe('is-valid-instance', function() {
       collection.use(plugin());
       view.use(plugin());
 
-      assert.deepEqual(hits, ['app', 'collection']);
+      assert.deepEqual(hits, ['app', 'Collection']);
       assert.deepEqual(misses, ['view']);
     });
 
@@ -240,7 +260,7 @@ describe('is-valid-instance', function() {
       var misses = [];
       function plugin() {
         return function fn(app) {
-          if (!isValidInstance(this, ['app', 'collection', 'view'])) {
+          if (!isValidInstance(this, ['app', 'Collection', 'view'])) {
             misses.push(this._name);
             return fn;
           }
@@ -253,7 +273,7 @@ describe('is-valid-instance', function() {
       collection.use(plugin());
       view.use(plugin());
 
-      assert.deepEqual(hits, ['app', 'collection', 'view']);
+      assert.deepEqual(hits, ['app', 'Collection', 'view']);
       assert.deepEqual(misses, []);
     });
 
@@ -276,7 +296,7 @@ describe('is-valid-instance', function() {
         .run(view)
 
       assert.deepEqual(hits, ['view']);
-      assert.deepEqual(misses, ['app', 'collection']);
+      assert.deepEqual(misses, ['app', 'Collection']);
     });
 
     it('should recurse down when defined on Collection', function() {
@@ -297,7 +317,7 @@ describe('is-valid-instance', function() {
         .run(view)
 
       assert.deepEqual(hits, ['view']);
-      assert.deepEqual(misses, ['collection']);
+      assert.deepEqual(misses, ['Collection']);
     });
   });
 
