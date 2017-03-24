@@ -121,7 +121,7 @@ describe('is-valid-instance', function() {
     it('should return true for an instance of Collection when defined on types', function() {
       var Collection = Templates.Collection;
       var collection = new Collection();
-      assert(isValidInstance(collection, ['Collection']));
+      assert(isValidInstance(collection, ['collection']));
     });
 
     it('should return false for an instance of View is passed', function() {
@@ -151,10 +151,10 @@ describe('is-valid-instance', function() {
       function plugin() {
         return function fn(app) {
           if (!isValidInstance(this)) {
-            misses.push(this._name);
+            misses.push(this._name.toLowerCase());
             return fn;
           }
-          hits.push(this._name);
+          hits.push(this._name.toLowerCase());
           return fn;
         };
       }
@@ -164,7 +164,7 @@ describe('is-valid-instance', function() {
       view.use(plugin());
 
       assert.deepEqual(hits, ['app']);
-      assert.deepEqual(misses, ['Collection', 'view']);
+      assert.deepEqual(misses, ['collection', 'view']);
     });
 
     it('should work for an instance of Collection', function() {
@@ -172,11 +172,11 @@ describe('is-valid-instance', function() {
       var misses = [];
       function plugin() {
         return function fn(app) {
-          if (!isValidInstance(this, ['Collection'])) {
-            misses.push(this._name);
+          if (!isValidInstance(this, ['collection'])) {
+            misses.push(this._name.toLowerCase());
             return fn;
           }
-          hits.push(this._name);
+          hits.push(this._name.toLowerCase());
           return fn;
         };
       }
@@ -185,7 +185,7 @@ describe('is-valid-instance', function() {
       collection.use(plugin());
       view.use(plugin());
 
-      assert.deepEqual(hits, ['Collection']);
+      assert.deepEqual(hits, ['collection']);
       assert.deepEqual(misses, ['app', 'view']);
     });
 
@@ -195,10 +195,10 @@ describe('is-valid-instance', function() {
       function plugin() {
         return function fn(app) {
           if (!isValidInstance(this, ['view'])) {
-            misses.push(this._name);
+            misses.push(this._name.toLowerCase());
             return fn;
           }
-          hits.push(this._name);
+          hits.push(this._name.toLowerCase());
           return fn;
         };
       }
@@ -208,7 +208,7 @@ describe('is-valid-instance', function() {
       view.use(plugin());
 
       assert.deepEqual(hits, ['view']);
-      assert.deepEqual(misses, ['app', 'Collection']);
+      assert.deepEqual(misses, ['app', 'collection']);
     });
 
     it('should work for App and View', function() {
@@ -217,10 +217,10 @@ describe('is-valid-instance', function() {
       function plugin() {
         return function fn(app) {
           if (!isValidInstance(this, ['view', 'app'])) {
-            misses.push(this._name);
+            misses.push(this._name.toLowerCase());
             return fn;
           }
-          hits.push(this._name);
+          hits.push(this._name.toLowerCase());
           return fn;
         };
       }
@@ -230,7 +230,7 @@ describe('is-valid-instance', function() {
       view.use(plugin());
 
       assert.deepEqual(hits, ['app', 'view']);
-      assert.deepEqual(misses, ['Collection']);
+      assert.deepEqual(misses, ['collection']);
     });
 
     it('should work for App and Collection', function() {
@@ -238,11 +238,11 @@ describe('is-valid-instance', function() {
       var misses = [];
       function plugin() {
         return function fn(app) {
-          if (!isValidInstance(this, ['Collection', 'app'])) {
-            misses.push(this._name);
+          if (!isValidInstance(this, ['collection', 'app'])) {
+            misses.push(this._name.toLowerCase());
             return fn;
           }
-          hits.push(this._name);
+          hits.push(this._name.toLowerCase());
           return fn;
         };
       }
@@ -251,7 +251,7 @@ describe('is-valid-instance', function() {
       collection.use(plugin());
       view.use(plugin());
 
-      assert.deepEqual(hits, ['app', 'Collection']);
+      assert.deepEqual(hits, ['app', 'collection']);
       assert.deepEqual(misses, ['view']);
     });
 
@@ -260,11 +260,11 @@ describe('is-valid-instance', function() {
       var misses = [];
       function plugin() {
         return function fn(app) {
-          if (!isValidInstance(this, ['app', 'Collection', 'view'])) {
-            misses.push(this._name);
+          if (!isValidInstance(this, ['app', 'collection', 'view'])) {
+            misses.push(this._name.toLowerCase());
             return fn;
           }
-          hits.push(this._name);
+          hits.push(this._name.toLowerCase());
           return fn;
         };
       }
@@ -273,7 +273,7 @@ describe('is-valid-instance', function() {
       collection.use(plugin());
       view.use(plugin());
 
-      assert.deepEqual(hits, ['app', 'Collection', 'view']);
+      assert.deepEqual(hits, ['app', 'collection', 'view']);
       assert.deepEqual(misses, []);
     });
 
@@ -283,10 +283,10 @@ describe('is-valid-instance', function() {
       function plugin() {
         return function fn(app) {
           if (!isValidInstance(this, ['view'])) {
-            misses.push(this._name);
+            misses.push(this._name.toLowerCase());
             return fn;
           }
-          hits.push(this._name);
+          hits.push(this._name.toLowerCase());
           return fn;
         };
       }
@@ -296,19 +296,20 @@ describe('is-valid-instance', function() {
         .run(view)
 
       assert.deepEqual(hits, ['view']);
-      assert.deepEqual(misses, ['app', 'Collection']);
+      assert.deepEqual(misses, ['app', 'collection']);
     });
 
     it('should recurse down when defined on Collection', function() {
       var hits = [];
       var misses = [];
+
       function plugin() {
         return function fn(app) {
           if (!isValidInstance(this, ['view'])) {
-            misses.push(this._name);
+            misses.push(this._name.toLowerCase());
             return fn;
           }
-          hits.push(this._name);
+          hits.push(this._name.toLowerCase());
           return fn;
         };
       }
@@ -317,7 +318,7 @@ describe('is-valid-instance', function() {
         .run(view)
 
       assert.deepEqual(hits, ['view']);
-      assert.deepEqual(misses, ['Collection']);
+      assert.deepEqual(misses, ['collection']);
     });
   });
 
