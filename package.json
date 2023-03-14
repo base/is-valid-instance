@@ -2,11 +2,11 @@
   "name": "is-valid-instance",
   "description": "Returns true if a value is a valid instance of Base.",
   "version": "0.3.0",
-  "homepage": "https://github.com/jonschlinkert/is-valid-instance",
+  "homepage": "https://github.com/base/is-valid-instance",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
-  "repository": "jonschlinkert/is-valid-instance",
+  "repository": "base/is-valid-instance",
   "bugs": {
-    "url": "https://github.com/jonschlinkert/is-valid-instance/issues"
+    "url": "https://github.com/base/is-valid-instance/issues"
   },
   "license": "MIT",
   "files": [
